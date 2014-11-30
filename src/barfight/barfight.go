@@ -5,7 +5,7 @@ import (
     // // "net/url"
     // // "github.com/ChimeraCoder/anaconda"
     // "github.com/fjl/go-couchdb"
-    // "log"
+    //"log"
     // //"encoding/json"
 )
 
@@ -23,5 +23,6 @@ func main() {
     //    fmt.Println(tweet.Text)
     //  }
 
-    BarList := LoadConfig()
+    CreateDBs(LoadConfig()) //Loads config data and creates db's if they're not there
+    
 }
