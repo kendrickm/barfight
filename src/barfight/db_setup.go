@@ -13,16 +13,19 @@ func CreateDBs(BarList map[string]string) []string {
     log.Printf("Error creating CouchDB client:  %v", err)
   }
 
-  DBNames := make([]string, 3)
+  DBNames := make([]string, len(BarLisr))
 
   for twitter, name := range BarList {
     //log.Println("Current name is " + name + " and twitter is " + twitter)
     CleanName := strings.Replace(name, " ", "", -1)
     CleanName = strings.ToLower(CleanName)
     log.Println("Updated name is " + CleanName + " and twitter is " + twitter)
+    DBNames = append(DBNames, CleanName)
     _, err := c.EnsureDB(CleanName)
     if err != nil {
       log.Printf("Error creating db:  %v", err)
     }
   }
+
+  return DBNames
 }

@@ -6,7 +6,7 @@ import (
   "log"
   )
 
-  func TwitterParse() {
+  func TwitterParse(string twitter_handle) {
 
     anaconda.SetConsumerKey("AnSsknpdlIDlcnA1SW9IXviGR")
     anaconda.SetConsumerSecret("GqjelkiaFVCIHeYRCTodDGbDZLcLz8q3f0gJPdatS4B03a2pog")
@@ -14,7 +14,7 @@ import (
      "dYjD2iZnGsA2pOqIG9SMUh1sus7gUkAiMLIOtHzpoBIXo")
 
      v := url.Values{}
-     v.Set("screen_name", "thehopandvine")
+     v.Set("screen_name", twitter_handle)
      searchResult, _ := api.GetStatusesUserTimeline(v)
      for _ , tweet := range searchResult {
        fmt.Println(tweet.Text)

@@ -23,6 +23,6 @@ func main() {
     //    fmt.Println(tweet.Text)
     //  }
 
-    CreateDBs(LoadConfig()) //Loads config data and creates db's if they're not there
+    DBNames := CreateDBs(LoadConfig()) //Loads config data and creates db's if they're not there
     
 }
