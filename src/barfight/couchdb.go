@@ -4,6 +4,7 @@ import (
   "github.com/fjl/go-couchdb"
   "log"
   "strings"
+  //"strconv"
   )
 
 func CreateDBs(BarList map[string]string) []string {
@@ -13,7 +14,8 @@ func CreateDBs(BarList map[string]string) []string {
     log.Printf("Error creating CouchDB client:  %v", err)
   }
 
-  DBNames := make([]string, len(BarLisr))
+//  log.Println("Creating array of " + strconv.Itoa(len(BarList)) + " size.")
+  DBNames := make([]string, 0)
 
   for twitter, name := range BarList {
     //log.Println("Current name is " + name + " and twitter is " + twitter)
@@ -26,6 +28,11 @@ func CreateDBs(BarList map[string]string) []string {
       log.Printf("Error creating db:  %v", err)
     }
   }
-
+  // log.Println("Final size of array is " + strconv.Itoa(len(DBNames)))
   return DBNames
+}
+
+
+func UpdateDB(BarName string, Info string) {
+
 }
