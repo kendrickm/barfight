@@ -14,8 +14,8 @@ func main() {
     DBs := CreateDBs(LoadConfig()) //Loads config data and creates db's if they're not there
     for _, name := range DBs {
       //log.Println(name)
-      TwitterParse(name)
-
+      Id, Tweet, Date := PullTweets(name)
+      UpdateDB(name, Tweet, Id, Date)
     }
     //LoadConfig()
     //log.Println(DBNames)

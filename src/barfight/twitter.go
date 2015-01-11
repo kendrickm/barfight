@@ -6,7 +6,7 @@ import (
   "log"
   )
 
-  func TwitterParse(twitter_handle string) {
+  func PullTweets(twitter_handle string) (int64, string, string) {
 
     anaconda.SetConsumerKey("AnSsknpdlIDlcnA1SW9IXviGR")
     anaconda.SetConsumerSecret("GqjelkiaFVCIHeYRCTodDGbDZLcLz8q3f0gJPdatS4B03a2pog")
@@ -17,13 +17,14 @@ import (
      v.Set("screen_name", twitter_handle)
      v.Set("count", "1")
      v.Set("contributor_details", "true")
-
+     var Text,CreatedAt string
+     var Id int64
      //log.Println(v)
      searchResult, _ := api.GetStatusesUserTimeline(v)
      for _ , tweet := range searchResult {
-       log.Println(tweet.Id)
-       log.Println(tweet.CreatedAt)
-       log.Println(tweet.Text)
-
+       Text = tweet.Text
+       Id   = tweet.Id
+       CreatedAt = tweet.CreatedAt
      }
+     return Id, Text, CreatedAt
   }

@@ -4,8 +4,16 @@ import (
   "github.com/fjl/go-couchdb"
   "log"
   "strings"
-  //"strconv"
+  "strconv"
   )
+
+//Structs used to send new document
+type testDocument struct {
+  Rev  string `json:"_rev,omitempty"`
+  Info string `json:"info"`
+  Date string `json:"date"`
+  Id   int64   `json:"twitter_id"`
+}
 
 func CreateDBs(BarList map[string]string) []string {
 
@@ -33,6 +41,16 @@ func CreateDBs(BarList map[string]string) []string {
 }
 
 
-func UpdateDB(BarName string, Info string) {
-
+func UpdateDB(BarName string, UpdatedInfo string, TweetId int64, CreatedAt string) {
+  c, err := couchdb.NewClient("http://docker:5984", nil)
+  if err != nil {
+    log.Printf("Error creating CouchDB client:  %v", err)
+  }
+  doc := &testDocument{Info:UpdatedInfo, Id:TweetId, Date:CreatedAt }
+  c_id := strconv.FormatInt(TweetId, 10)
+  rev, err := c.DB(BarName).Put(c_id, doc, "")
+  if err != nil {
+    log.Printf("Error adding document:  %v", err)
+  }
+  log.Printf("Creatd record " + rev)
 }
