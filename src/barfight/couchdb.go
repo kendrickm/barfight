@@ -9,10 +9,11 @@ import (
 
 //Structs used to send new document
 type testDocument struct {
-  Rev  string `json:"_rev,omitempty"`
-  Info string `json:"info"`
-  Date string `json:"date"`
-  Id   int64  `json:"tweet_id"`
+  Rev     string `json:"_rev,omitempty"`
+  Brewery string `json:"brewery"`
+  Beer    string `json:"beer"`
+  Date    string `json:"date"`
+  Id      int64  `json:"tweet_id"`
 }
 
 func CouchConnect() *couchdb.Client {
@@ -54,10 +55,10 @@ func CreateDB(BarName string) {
 // }
 
 
-func UpdateDB(BarName string, UpdatedInfo string, TweetId int64, CreatedAt string) {
+func UpdateDB(BarName string, BreweryName string, BeerName string, TweetId int64, CreatedAt string) {
   c := CouchConnect()
 
-  doc := &testDocument{Info:UpdatedInfo, Id:TweetId, Date:CreatedAt }
+  doc := &testDocument{Beer:BeerName, Brewery:BreweryName, Id:TweetId, Date:CreatedAt }
   c_id := strconv.FormatInt(TweetId, 10)
   rev, err := c.DB(BarName).Put(c_id, doc, "")
   if err != nil {

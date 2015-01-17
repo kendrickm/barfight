@@ -16,7 +16,8 @@ func main() {
       log.Println(name + " is now fighting.")
       CreateDB(twitter)
       _, tweet, _ := PullTweets(twitter)
-      RawLogger(name, tweet)
+      //RawLogger(name, tweet)
+      parse(tweet)
     }
 }
 
