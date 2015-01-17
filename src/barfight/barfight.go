@@ -5,18 +5,21 @@ import (
     // // "net/url"
     // // "github.com/ChimeraCoder/anaconda"
     // "github.com/fjl/go-couchdb"
-    //"log"
+    "log"
     // //"encoding/json"
 )
 
 func main() {
-
-    DBs := CreateDBs(LoadConfig()) //Loads config data and creates db's if they're not there
-    for _, name := range DBs {
-      //log.Println(name)
-      Id, Tweet, Date := PullTweets(name)
-      UpdateDB(name, Tweet, Id, Date)
+    log.Println("*******BARFIGHT*******")
+    ConfigData := LoadConfig()
+    for twitter, name := range ConfigData {
+      log.Println(name + " is now fighting.")
+      CreateDB(twitter)
+      _, tweet, _ := PullTweets(twitter)
+      RawLogger(name, tweet)
     }
-    //LoadConfig()
-    //log.Println(DBNames)
+}
+
+func RawLogger(brewery string, tweet string) {
+  log.Println("Raw: " + brewery + ": " + tweet)
 }
