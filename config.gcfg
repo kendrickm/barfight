@@ -1,0 +1,6 @@
+; Barfight Twitter Scraper
+[Twitter]
+APIKEY = FOO
+APISECRET = BAR
+ACCESSKEY = BAZ
+ACCESSSECRET = ZAP
