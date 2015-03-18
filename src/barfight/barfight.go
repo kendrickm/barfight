@@ -17,7 +17,7 @@ func main() {
 		CreateDB(twitter)
 		_, tweet, _ := PullTweets(twitter)
 		RawLogger(name, tweet)
-		//parse(tweet)
+		parse(tweet)
 	}
 }
 
