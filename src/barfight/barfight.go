@@ -11,10 +11,9 @@ import (
 
 func main() {
 	log.Println("*******BARFIGHT*******")
-	ConfigData := LoadConfig()
-	for twitter, name := range ConfigData {
+	LocationData := LoadConfig()
+	for twitter, name := range LocationData {
 		log.Println(name + " is now fighting.")
-		CreateDB(twitter)
 		_, tweet, _ := PullTweets(twitter)
 		RawLogger(name, tweet)
 		parse(tweet)
