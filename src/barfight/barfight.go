@@ -1,12 +1,7 @@
 package main
 
 import (
-	// "net/http"
-	// // "net/url"
-	// // "github.com/ChimeraCoder/anaconda"
-	// "github.com/fjl/go-couchdb"
 	"log"
-	// //"encoding/json"
 )
 
 func main() {

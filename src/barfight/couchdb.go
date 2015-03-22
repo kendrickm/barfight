@@ -4,8 +4,6 @@ import (
 	"github.com/fjl/go-couchdb"
 	"log"
 	"code.google.com/p/gcfg"
-	//"strings"
-	// "strconv"
 )
 
 func CouchConnect() *couchdb.Client {
@@ -20,14 +18,6 @@ func CouchConnect() *couchdb.Client {
 	}
 	return c
 }
-
-// func CreateDB(BarName string) {
-// 	c := CouchConnect()
-// 	_, err := c.EnsureDB(BarName)
-// 	if err != nil {
-// 		log.Printf("Error creating db:  %v", err)
-// 	}
-// }
 
 func UpdateDB(doc *checkinDocument, db string, c_id string) {
 	c := CouchConnect()

@@ -1,8 +1,5 @@
 package main
 import (
-//	"github.com/fjl/go-couchdb"
-	// "log"
-	//"strings"
 	"strconv"
 )
 
