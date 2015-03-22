@@ -53,7 +53,7 @@ func LoadConfig() map[string]string {
 			log.Printf("Error pulling data:  %v", err)
 		}
 
-		unless config.Twitter = ""{
+		if config.Twitter != "" {
 			BarList[config.Twitter] = config.Name
 		}
 
