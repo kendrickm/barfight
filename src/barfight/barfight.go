@@ -1,3 +1,7 @@
+/*******************************************************************************
+Application to scrape tap information from twitter and store in database
+*******************************************************************************/
+
 package main
 
 import (

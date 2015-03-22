@@ -1,11 +1,11 @@
 package main
-
 import (
 	"github.com/fjl/go-couchdb"
 	"log"
 	"code.google.com/p/gcfg"
 )
 
+//Builds a couchDB object
 func CouchConnect() *couchdb.Client {
 	var cfg ConfigFile
 	err := gcfg.ReadFileInto(&cfg, "config.gcfg")
@@ -19,6 +19,7 @@ func CouchConnect() *couchdb.Client {
 	return c
 }
 
+//Inserts Document of Beer update
 func UpdateDB(doc *checkinDocument, db string, c_id string) {
 	c := CouchConnect()
 	rev, err := c.DB(db).Put(c_id, doc, "")
@@ -49,9 +50,13 @@ func LoadConfig() map[string]string {
 		var config configResult
 		err = db.Get(s, &config, nil)
 		if err != nil {
-			log.Printf("Error creating CouchDB client:  %v", err)
+			log.Printf("Error pulling data:  %v", err)
 		}
-		BarList[config.Twitter] = config.Name
+
+		unless config.Twitter = ""{
+			BarList[config.Twitter] = config.Name
+		}
+
 	}
 
 	return BarList
