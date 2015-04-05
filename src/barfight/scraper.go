@@ -4,7 +4,7 @@ import (
 	"log"
 	"gopkg.in/jmcvetta/napping.v1"
 	"net/http"
-	// "encoding/json"
+	"code.google.com/p/gcfg"
 )
 
 func Scraper(BarList LocationResponse){
@@ -26,21 +26,20 @@ func Scraper(BarList LocationResponse){
 
 func Checkin(TwitterHandle string, BeerData string, TweetId int64, CreatedDate string, NeedsReview bool) {
 
-	checkin := CheckinRequest{Data: BeerData, Source: TwitterHandle, Date: CreatedDate, Source_id: TweetId, Needs_review: NeedsReview}
+	var cfg ConfigFile
+	cfgerr := gcfg.ReadFileInto(&cfg, "config.gcfg")
+	if cfgerr != nil {
+		log.Printf("Error reading config file:  %v", cfgerr)
+	}
 
+	checkin := CheckinRequest{Data: BeerData, Source: TwitterHandle, Date: CreatedDate, Source_id: TweetId, Needs_review: NeedsReview}
 	h := &http.Header{}
 	h.Set("Content-Type", "application/json")
-	url := "http://localhost:5000/checkin/twitter"
-
-	//var jsonStr = []byte(`{"title":"Buy cheese and bread for breakfast."}`)
-
-
 	s := napping.Session{}
 	s.Header = h
+	url := cfg.BarfightAPI.URL + "/checkin/twitter"
 
 	_, err := s.Post(url, &checkin, nil, nil)
-
-	// log.Println(resp)
 	if err != nil {
 		log.Println(err)
 	}
