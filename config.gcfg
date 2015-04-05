@@ -4,3 +4,5 @@ APIKEY = FOO
 APISECRET = BAR
 ACCESSKEY = BAZ
 ACCESSSECRET = ZAP
+[BarfightAPI]
+URL = http://localhost:5000
