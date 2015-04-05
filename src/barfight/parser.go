@@ -6,23 +6,40 @@ import (
 	"regexp"
 )
 
-func parse(rawText string) {
+func parse(rawText string) (bool, string, string) {
 	needs_review := true
 	rawText = stripHashtag(rawText)
-
+	rawText = stripNames(rawText)
+	var (
+		oldBeer = ""
+		newBeer = ""
+		checkin_data = ""
+		)
 	if strings.Contains(rawText, "replacing") {
-		newBeer, oldBeer := splitOldNew(rawText)
+		newBeer, oldBeer = splitOldNew(rawText)
 		log.Println("Old beer is " + oldBeer)
 		log.Println("New beer is " + newBeer)
 		needs_review = false
+		checkin_data = newBeer
 	}
 	if needs_review {
 		log.Println("Tweet needs manual review")
+		checkin_data = rawText
 	}
+
+	return needs_review, checkin_data, oldBeer
 }
 
 func stripHashtag(rawText string) string {
 	var hashtagID = regexp.MustCompile(`#([^\\s]*)`)
+	if hashtagID.MatchString(rawText) {
+		rawText = hashtagID.ReplaceAllString(rawText, "")
+	}
+	return rawText
+}
+
+func stripNames(rawText string) string {
+	var hashtagID = regexp.MustCompile(`@([^\\s]*)`)
 	if hashtagID.MatchString(rawText) {
 		rawText = hashtagID.ReplaceAllString(rawText, "")
 	}
