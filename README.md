@@ -3,18 +3,17 @@ barfight
 
 Go application to poll twitter data from bars and populate a db with what they're servering on tap
 
-Initially designed to work with couchdb running in a docker container.
+Designed to get and post data with the barfight api service(https://github.com/dudleyramen/animated-ironman)
 
 
-Setup
-* Setup Docker on whatever OS you're running in
-* Download the couchdb containier `docker pull klaemo/couchdb`
-* Run container with ports exposed `docker run -d -p 5984:5984 --name couchdb klaemo/couchdb`
-* (If on OSX) Add your boot2docker vm to the hosts file as 'docker' ie. `192.168.59.103  docker`
-* Run setup.sh to populate the db with the initial config list of bars/twitter accounts
+##SETUP
+* Create a Twitter API user/key
+* Setup the barfight api service and seed it with data
 
 
 
-
-
-Layout 
+##TODO
+* Strip (@username) from tweets
+* If parsing succeeds, add checkin to db
+* Only search since last updated
+* Mark last beer as kicked
