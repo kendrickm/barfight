@@ -2,7 +2,7 @@ package main
 
 //Config file data
 type ConfigFile struct {
-  CouchDB struct {
+  BarfightAPI struct {
     URL string
   }
   Twitter struct {
