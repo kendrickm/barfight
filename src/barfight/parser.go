@@ -10,6 +10,7 @@ func parse(rawText string) (bool, string, string) {
 	needs_review := true
 	rawText = stripHashtag(rawText)
 	rawText = stripNames(rawText)
+	rawText = stripSpecialChars(rawText)
 	var (
 		oldBeer = ""
 		newBeer = ""
@@ -39,9 +40,21 @@ func stripHashtag(rawText string) string {
 }
 
 func stripNames(rawText string) string {
-	var hashtagID = regexp.MustCompile(`@([^\\s]*)`)
-	if hashtagID.MatchString(rawText) {
-		rawText = hashtagID.ReplaceAllString(rawText, "")
+	var nameID = regexp.MustCompile(`@(\w+)`)
+	if nameID.MatchString(rawText) {
+		rawText = nameID.ReplaceAllString(rawText, "")
+	}
+	return rawText
+}
+
+func stripSpecialChars(rawText string) string {
+	var openParenID = regexp.MustCompile(`\(`)
+	var closeParenID = regexp.MustCompile(`\)`)
+	if openParenID.MatchString(rawText) {
+		rawText = openParenID.ReplaceAllString(rawText, "")
+	}
+	if closeParenID.MatchString(rawText) {
+		rawText = closeParenID.ReplaceAllString(rawText, "")
 	}
 	return rawText
 }

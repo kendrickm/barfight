@@ -21,7 +21,7 @@ func PullTweets(twitter_handle string) (int64, string, string) {
 	log.Println("Pulling tweet for " + twitter_handle)
 	v := url.Values{}
 	v.Set("screen_name", twitter_handle)
-	v.Set("count", "10")
+	v.Set("count", "1")
 	v.Set("contributor_details", "true")
 	var Text, CreatedAt string
 	var Id int64
