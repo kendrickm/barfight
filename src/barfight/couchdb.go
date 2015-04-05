@@ -3,6 +3,7 @@ import (
 	"github.com/fjl/go-couchdb"
 	"log"
 	"code.google.com/p/gcfg"
+	"gopkg.in/jmcvetta/napping.v1"
 )
 
 //Builds a couchDB object
@@ -30,34 +31,18 @@ func UpdateDB(doc *checkinDocument, db string, c_id string) {
 }
 
 //Builds a map object of bars and their twitter handles
-func LoadConfig() map[string]string {
+//func LoadConfig() map[string]string {
+func LoadConfig() LocationResponse {
+	url := "http://localhost:5000/locations?type=twitter"
+	s := napping.Session{}
 
-	config_db := "locations" //Name of db config values are stored in
-	c := CouchConnect()
+	BarList := LocationResponse{}
+	_, err := s.Get(url, nil, &BarList, nil)
 
-	db := c.DB(config_db)
-	var result alldocsResult
-	BarList := make(map[string]string)
-
-	err := db.AllDocs(&result, nil)
 	if err != nil {
-		log.Printf("Error pulling data:  %v", err)
-	}
-
-	//Iterates through results and builds map
-	for _, value := range result.Rows {
-		s, _ := value["id"].(string)
-		var config configResult
-		err = db.Get(s, &config, nil)
-		if err != nil {
-			log.Printf("Error pulling data:  %v", err)
-		}
-
-		if config.Twitter != "" {
-			BarList[config.Twitter] = config.Name
-		}
-
+		log.Printf("Error pulling twitter handles  %v", err)
 	}
 
 	return BarList
+
 }

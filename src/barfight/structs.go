@@ -13,6 +13,19 @@ type ConfigFile struct {
   }
 }
 
+
+type CheckinRequest struct {
+  Data string `json:"data"`
+  Source string `json:"source"`
+  Source_id int64 `json:"source_id"`
+  Date string `json:"date"`
+  Needs_review bool `json:"needs_review"`
+}
+
+type LocationResponse struct {
+	Locations []string `json:"search_results"`
+}
+
 //Structs to store data returned from couch
 type alldocsResult struct {
 	TotalRows int `json:"total_rows"`
