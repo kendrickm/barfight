@@ -17,13 +17,18 @@ type ConfigFile struct {
 type CheckinRequest struct {
   Data string `json:"data"`
   Source string `json:"source"`
-  Source_id int64 `json:"source_id"`
+  Source_id string `json:"source_id"`
   Date string `json:"date"`
   Needs_review bool `json:"needs_review"`
 }
 
 type LocationResponse struct {
-	Locations []string `json:"search_results"`
+	Locations []SingleLocation `json:"search_results"`
+}
+
+type SingleLocation struct {
+  Name string `json:"name"`
+  LastScraped string `json:"last_scraped"`
 }
 
 //Structs to store data returned from couch
@@ -44,5 +49,5 @@ type checkinDocument struct {
 	Beer      string `json:"beer"`
 	Date      string `json:"date"`
   Source    string `json:"source"`
-	Source_Id int64  `json:"source_id"`
+	Source_Id string  `json:"source_id"`
 }

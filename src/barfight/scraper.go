@@ -1,6 +1,5 @@
 package main
 import (
-	"strconv"
 	"log"
 	"gopkg.in/jmcvetta/napping.v1"
 	"net/http"
@@ -8,23 +7,26 @@ import (
 )
 
 func Scraper(BarList LocationResponse){
-	for _, twitter_handle := range BarList.Locations {
+	for _, bar := range BarList.Locations {
+		twitter_handle := bar.Name
+		last_scraped   := bar.LastScraped
 		log.Println(twitter_handle + " is now fighting.")
-		ID, tweet, CreatedAt := PullTweets(twitter_handle)
-		data := "ID: " + strconv.FormatInt(ID, 10) + " Text: " + tweet + " CreatedAt: " + CreatedAt
-		RawLogger(twitter_handle, data)
-		needs_review, parsedData, oldBeer := parse(tweet)
-
-		Checkin(twitter_handle, parsedData, ID, CreatedAt, needs_review)
-		if oldBeer != ""{
-			Kick_Old(twitter_handle, oldBeer)
-		}
+		PullTweets(twitter_handle, last_scraped)
 	}
 }
 
+func WorkScrapings(twitter_handle string, ID string, tweet string, CreatedAt string) {
+	data := "ID: " + ID + " Text: " + tweet + " CreatedAt: " + CreatedAt
+	RawLogger(twitter_handle, data)
+	needs_review, parsedData, oldBeer := parse(tweet)
 
+	Checkin(twitter_handle, parsedData, ID, CreatedAt, needs_review)
+	if oldBeer != ""{
+		Kick_Old(twitter_handle, oldBeer)
+	}
+}
 
-func Checkin(TwitterHandle string, BeerData string, TweetId int64, CreatedDate string, NeedsReview bool) {
+func Checkin(TwitterHandle string, BeerData string, TweetId string, CreatedDate string, NeedsReview bool) {
 
 	var cfg ConfigFile
 	cfgerr := gcfg.ReadFileInto(&cfg, "config.gcfg")

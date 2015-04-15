@@ -5,10 +5,11 @@ import (
 	"code.google.com/p/gcfg"
 	"log"
 	"net/url"
+	"strconv"
 )
 
 //Does the scraping
-func PullTweets(twitter_handle string) (int64, string, string) {
+func PullTweets(twitter_handle string, since_id string) {
 
 	var cfg ConfigFile
 	err := gcfg.ReadFileInto(&cfg, "config.gcfg")
@@ -21,15 +22,22 @@ func PullTweets(twitter_handle string) (int64, string, string) {
 	log.Println("Pulling tweet for " + twitter_handle)
 	v := url.Values{}
 	v.Set("screen_name", twitter_handle)
-	v.Set("count", "1")
 	v.Set("contributor_details", "true")
-	var Text, CreatedAt string
-	var Id int64
+	v.Set("since_id", since_id)
 	searchResult, _ := api.GetStatusesUserTimeline(v)
-	for _, tweet := range searchResult {
-		Text = tweet.Text
-		Id = tweet.Id
-		CreatedAt = tweet.CreatedAt
+
+	if len(searchResult) == 0 {
+		log.Println("No new tweets")
+	}	else {
+		for i := len(searchResult)-1; i >= 0; i-- {
+	    tweet := searchResult[i]
+			id := strconv.FormatInt(tweet.Id, 10)
+			WorkScrapings(twitter_handle, id, tweet.Text, tweet.CreatedAt)
+		}
+		//
+		// for _, tweet := range searchResult {
+		// 	id := strconv.FormatInt(tweet.Id, 10)
+		// 	WorkScrapings(twitter_handle, id, tweet.Text, tweet.CreatedAt)
+		// }
 	}
-	return Id, Text, CreatedAt
 }
